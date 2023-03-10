@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VirtualEducation.DDD.Domain\VirtualEducation.DDD.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Gateways\Classroom\" />
+    <Folder Include="Gateways\Student\ClassroomRegistration\" />
+    <Folder Include="Gateways\Student\Student\" />
+    <Folder Include="Gateways\Teacher\" />
+    <Folder Include="UseCases\" />
+  </ItemGroup>
+
+</Project>
