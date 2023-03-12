@@ -3,18 +3,18 @@ using VirtualEducation.DDD.Domain.Student.ValueObjects.ClassroomRegistration;
 
 namespace VirtualEducation.DDD.Domain.Student.Entities
 {
-    public class ClassroomRegistrationStudent : Entity<RegistrationID>
+    public class ClassroomRegistrationStudent : Entity<StudentRegistrationID>
     {
         //variables
-        public RegistrationDetail RegistrationDetail { get; private set; }
+        public StudentRegistrationDetail RegistrationDetail { get; private set; }
 
 
         //constructor
-        public ClassroomRegistrationStudent(RegistrationID registrationID) : base(registrationID) { }
+        public ClassroomRegistrationStudent(StudentRegistrationID registrationID) : base(registrationID) { }
 
 
         //set method for registration detail
-        public void SetRegistrationDetail(RegistrationDetail registrationDetail)
+        public void SetRegistrationDetail(StudentRegistrationDetail registrationDetail)
         {
             this.RegistrationDetail = registrationDetail;
         }

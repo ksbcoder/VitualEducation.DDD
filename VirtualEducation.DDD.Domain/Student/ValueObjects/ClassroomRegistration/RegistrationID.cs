@@ -2,16 +2,16 @@
 
 namespace VirtualEducation.DDD.Domain.Student.ValueObjects.ClassroomRegistration
 {
-    public class RegistrationID : Identity
+    public class StudentRegistrationID : Identity
     {
         //contructor
-        internal RegistrationID(Guid id) : base(id) { } //internal para que solo se pueda crear desde la misma capa
+        internal StudentRegistrationID(Guid id) : base(id) { } //internal para que solo se pueda crear desde la misma capa
 
 
         //factory method: crea y devuelve una instancia usando el contructor
-        public static RegistrationID Of(Guid id)
+        public static StudentRegistrationID Of(Guid id)
         {
-            return new RegistrationID(id);
+            return new StudentRegistrationID(id);
         }
     }
 }

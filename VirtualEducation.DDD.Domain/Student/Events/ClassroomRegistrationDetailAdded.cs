@@ -5,10 +5,10 @@ namespace VirtualEducation.DDD.Domain.Student.Events
 {
     public class ClassroomRegistrationDetailAdded : DomainEvent
     {
-        public RegistrationDetail ClassroomRegistrationDetail { get; set; }
+        public StudentRegistrationDetail ClassroomRegistrationDetail { get; set; }
 
-        public ClassroomRegistrationDetailAdded(RegistrationDetail classroomRegistrationDetail)
-            : base("student.classroomregistrationdetail.added")
+        public ClassroomRegistrationDetailAdded(StudentRegistrationDetail classroomRegistrationDetail)
+            : base("student.classroomregistration.detail.added")
         {
             ClassroomRegistrationDetail = classroomRegistrationDetail;
         }

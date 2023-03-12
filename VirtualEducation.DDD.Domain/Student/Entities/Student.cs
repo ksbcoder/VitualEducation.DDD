@@ -11,7 +11,7 @@ namespace VirtualEducation.DDD.Domain.Student.Entities
     {
         //variables
         public StudentID StudentID { get; init; }
-        public PersonalData PersonalData { get; private set; }
+        public StudentPersonalData PersonalData { get; private set; }
         //vitual navigation for entities
         public virtual AccountStudent AccountStudent { get; private set; }
         public virtual ClassroomRegistrationStudent ClassroomRegistrationStudent { get; private set; }
@@ -28,7 +28,7 @@ namespace VirtualEducation.DDD.Domain.Student.Entities
         {
             AppendChange(new StudentCreated(studentID.ToString()));
         }
-        public void SetPersonalData(PersonalData personalData)
+        public void SetPersonalData(StudentPersonalData personalData)
         {
             AppendChange(new PersonalDataAdded(personalData));
         }
@@ -38,22 +38,22 @@ namespace VirtualEducation.DDD.Domain.Student.Entities
             AppendChange(new AccountAdded(accountToStudent));
         }
 
-        public void SetDetailsToAccount(AccountDetail accountDetail)
+        public void SetDetailsToAccount(StudentAccountDetail accountDetail)
         {
             AppendChange(new AccountDetailAdded(accountDetail));
         }
 
-        public void SetEmailToAccount(Email email)
+        public void SetEmailToAccount(StudentEmail email)
         {
             AppendChange(new EmailAdded(email));
         }
 
-        public void SetPermissionsToAccount(Permissions permissions)
+        public void SetPermissionsToAccount(StudentPermissions permissions)
         {
             AppendChange(new PermissionsAdded(permissions));
         }
 
-        public void SetAccountDetailUpdatedToAccount(AccountDetail accountDetail)
+        public void SetAccountDetailUpdatedToAccount(StudentAccountDetail accountDetail)
         {
             AppendChange(new AccountDetailUpdated(accountDetail));
         }
@@ -62,7 +62,7 @@ namespace VirtualEducation.DDD.Domain.Student.Entities
         {
             AppendChange(new ClassroomRegistrationAdded(classroomRegistrationStudent));
         }
-        public void SetDetailToClassroomRegistration(RegistrationDetail registrationDetail)
+        public void SetDetailToClassroomRegistration(StudentRegistrationDetail registrationDetail)
         {
             AppendChange(new ClassroomRegistrationDetailAdded(registrationDetail));
         }
@@ -71,7 +71,7 @@ namespace VirtualEducation.DDD.Domain.Student.Entities
 
         #region Metodos de cambio del agregado como entidad
         //Student
-        public void SetPersonalDataAggregate(PersonalData personalData)
+        public void SetPersonalDataAggregate(StudentPersonalData personalData)
         {
             PersonalData = personalData;
         }
