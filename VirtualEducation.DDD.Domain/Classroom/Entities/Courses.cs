@@ -10,10 +10,6 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
         public Guid CourseID { get; init; }
         public CourseDetail CourseDetail { get; private set; }
 
-        //references to other entities
-        public Guid ClassroomID { get; private set; }
-        [JsonIgnore]
-        public virtual Classroom? Classroom { get; private set; }
         //contructor
         public Courses(Guid id)
         {
@@ -23,12 +19,6 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
         public void SetCouseDetail(CourseDetail couseDetail)
         {
             this.CourseDetail = couseDetail;
-        }
-        //set method for classroom entity
-        public void SetClassroom(Classroom classroom)
-        {
-            this.ClassroomID = classroom.ClassroomID;
-            this.Classroom = classroom;
         }
     }
 }

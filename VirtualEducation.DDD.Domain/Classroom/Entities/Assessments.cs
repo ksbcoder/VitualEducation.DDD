@@ -9,10 +9,8 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
         //variables
         public Guid AssessmentID { get; init; }
         public Qualification Qualification { get; private set; }
-        //references to other entities
-        public Guid ClassroomID { get; private set; }
-        [JsonIgnore]
-        public virtual Classroom? Classroom { get; private set; }
+
+
         //contructor
         public Assessments(Guid id) 
         { 
@@ -22,12 +20,6 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
         public void SetQualification(Qualification Qualification)
         {
             this.Qualification = Qualification;
-        }
-        //set method for Classroom entity
-        public void SetClassroom(Classroom classroom)
-        {
-            this.ClassroomID = classroom.ClassroomID;
-            this.Classroom = classroom;
         }
     }
 }

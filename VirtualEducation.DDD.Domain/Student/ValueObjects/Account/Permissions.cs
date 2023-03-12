@@ -1,14 +1,17 @@
 ﻿namespace VirtualEducation.DDD.Domain.Student.ValueObjects.Account
 {
-    public record Permissions
+    public class Permissions
     {
         //variables
         public string Role { get; init; }
+
+
         //constructor
-        internal Permissions(string role)
+        public Permissions(string role)
         {
             this.Role = role;
         }
+
         //create method
         public static Permissions Create(string role)
         {

@@ -1,7 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Classroom;
-using VirtualEducation.DDD.Domain.Student.ValueObjects.Student;
-using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher;
 
 namespace VirtualEducation.DDD.Domain.Classroom.Entities
 {
@@ -9,8 +7,6 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
     {
         //variables
         public Guid ClassroomID { get; init; }
-        public Guid StudentID { get; private set; }
-        public Guid TeacherID { get; private set; }
         public Preferences Preferences { get; private set; }
         //virtual navigation for entities
         [JsonIgnore]
@@ -22,16 +18,6 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
             this.ClassroomID = id;
         }
 
-        //set method for student id
-        public void SetStudentID(StudentID studentID)
-        {
-            this.StudentID = studentID;
-        }
-        //set method for teacher id
-        public void SetTeacherID(TeacherID teacherID)
-        {
-            this.TeacherID = teacherID;
-        }
         //set method for preferences
         public void SetPreferences(Preferences preferences)
         {
@@ -48,7 +34,6 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
         {
             this.Courses ??= new List<Courses>();
             this.Courses.Add(course);
-            course.SetClassroom(this);
         }
         //set method for assessments
         public void SetAssessments(List<Assessments> assessments)
@@ -60,7 +45,6 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
         {
             this.Assessments ??= new List<Assessments>();
             this.Assessments.Add(assessment);
-            assessment.SetClassroom(this);
         }
     }
 }

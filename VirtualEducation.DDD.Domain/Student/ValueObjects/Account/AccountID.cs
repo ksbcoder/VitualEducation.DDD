@@ -1,23 +1,18 @@
-﻿namespace VirtualEducation.DDD.Domain.Student.ValueObjects.Account
+﻿using VirtualEducation.DDD.Domain.Commons;
+
+namespace VirtualEducation.DDD.Domain.Student.ValueObjects.Account
 {
-    public record AccountID
+    public class AccountID : Identity
     {
-        //variables
-        public Guid Value { get; init; }
-        //constructor
-        internal AccountID(Guid id)
-        {
-            Value = id;
-        }
-        //create method
-        public static AccountID Create(Guid id)
+        //contructor
+        internal AccountID(Guid id) : base(id) { } //internal para que solo se pueda crear desde la misma capa
+
+
+
+        //factory method: crea y devuelve una instancia usando el contructor
+        public static AccountID Of(Guid id)
         {
             return new AccountID(id);
-        }
-        //implicit assignment
-        public static implicit operator Guid(AccountID accountID)
-        {
-            return accountID.Value;
         }
     }
 }

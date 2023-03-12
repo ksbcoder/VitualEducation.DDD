@@ -7,6 +7,8 @@
         public string LastName { get; init; }
         public int Age { get; init; }
         public string Gender { get; init; }
+
+
         //constructor
         internal PersonalData(string name, string lastName, int age, string gender)
         {
@@ -15,6 +17,9 @@
             Age = age;
             Gender = gender;
         }
+        public PersonalData() { }
+
+
         //create method
         public static PersonalData Create(string name, string lastName, int age, string gender)
         {
@@ -35,6 +40,10 @@
             if (age.Equals(null))
             {
                 throw new ArgumentNullException("Age cannot be null");
+            }
+            if (age <= 0)
+            {
+                throw new ArgumentException("Age cannot be less than zero");
             }
             if (gender.Equals(null))
             {

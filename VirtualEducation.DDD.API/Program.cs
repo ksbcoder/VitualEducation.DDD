@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using VirtualEducation.DDD.Domain.UseCases.Gateways;
+using VirtualEducation.DDD.Domain.UseCases.Gateways.Repositories;
+using VirtualEducation.DDD.Domain.UseCases.UseCases;
+using VirtualEducation.DDD.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +13,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("urlConnection"),
+                    b => b.MigrationsAssembly(typeof(DataBaseContext).Assembly.FullName)
+));
+
+builder.Services.AddScoped(typeof(IStoredEventRepository<>), typeof(StoredEventRepository<>));
+builder.Services.AddScoped<IStudentUseCaseGateway, StudentUseCaseGateway>();
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DataBaseContext>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

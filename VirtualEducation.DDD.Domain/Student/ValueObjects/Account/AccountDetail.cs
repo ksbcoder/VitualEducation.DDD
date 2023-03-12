@@ -1,16 +1,19 @@
 ﻿namespace VirtualEducation.DDD.Domain.Student.ValueObjects.Account
 {
-    public record AccountDetail
+    public class AccountDetail
     {
         //variables
         public string Username { get; init; }
         public DateTime CreatedAt { get; init; }
+
+
         //constructor
-        internal AccountDetail(string username, DateTime createdAt)
+        public AccountDetail(string username, DateTime createdAt)
         {
             Username = username;
             CreatedAt = createdAt;
         }
+
         //create method
         public static AccountDetail Create(string username, DateTime createdAt)
         {
@@ -18,7 +21,7 @@
             return new AccountDetail(username, createdAt);
         }
         //validate method
-        public static void Validate(string username, DateTime createdAt)
+        public static void Validate(string username, DateTime? createdAt)
         {
             if (username.Equals(null))
             {
