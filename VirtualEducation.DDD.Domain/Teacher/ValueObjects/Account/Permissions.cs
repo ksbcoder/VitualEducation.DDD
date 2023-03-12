@@ -1,19 +1,23 @@
 ﻿namespace VirtualEducation.DDD.Domain.Teacher.ValueObjects.Account
 {
-    public record Permissions
+    public class TeacherPermissions
     {
         //variables
         public string Role { get; init; }
+
+
         //constructor
-        internal Permissions(string role)
+        public TeacherPermissions(string role)
         {
             this.Role = role;
         }
+
+
         //create method
-        public static Permissions Create(string role)
+        public static TeacherPermissions Create(string role)
         {
             Validate(role);
-            return new Permissions(role);
+            return new TeacherPermissions(role);
         }
         //validate method
         public static void Validate(string role)

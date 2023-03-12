@@ -1,25 +1,29 @@
 ﻿namespace VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher
 {
-    public record PersonalData
+    public class TeacherPersonalData
     {
         //variables
         public string Name { get; init; }
         public string LastName { get; init; }
         public int Age { get; init; }
         public string Gender { get; init; }
+
+
         //constructor
-        internal PersonalData(string name, string lastName, int age, string gender)
+        public TeacherPersonalData(string name, string lastName, int age, string gender)
         {
             Name = name;
             LastName = lastName;
             Age = age;
             Gender = gender;
         }
+
+
         //create method
-        public static PersonalData Create(string name, string lastName, int age, string gender)
+        public static TeacherPersonalData Create(string name, string lastName, int age, string gender)
         {
              Validate(name, lastName, age, gender);
-            return new PersonalData(name, lastName, age, gender);
+            return new TeacherPersonalData(name, lastName, age, gender);
         }
         //validate method 
         public static void Validate(string name, string lastName, int age, string gender)

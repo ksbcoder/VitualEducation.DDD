@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Classroom\Commands\" />
     <Folder Include="Classroom\Events\" />
-    <Folder Include="Teacher\Commands\" />
   </ItemGroup>
 
   <ItemGroup>

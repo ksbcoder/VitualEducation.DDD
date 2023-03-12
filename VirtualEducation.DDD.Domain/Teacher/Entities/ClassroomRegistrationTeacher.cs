@@ -1,22 +1,22 @@
-﻿using System.Text.Json.Serialization;
+﻿using VirtualEducation.DDD.Domain.Commons;
 using VirtualEducation.DDD.Domain.Teacher.ValueObjects.ClassroomRegistration;
 
 namespace VirtualEducation.DDD.Domain.Teacher.Entities
 {
-    public class ClassroomRegistrationTeacher
+    public class ClassroomRegistrationTeacher : Entity<TeacherRegistrationID>
     {
         //variables
-        public Guid RegistrationID { get; init; }
-        public RegistrationDetail RegistrationDetail { get; private set; }
+        public TeacherRegistrationDetail RegistrationDetail { get; private set; }
+
+
         //constructor
-        public ClassroomRegistrationTeacher(Guid id)
-        {
-            this.RegistrationID = id;
-        }
+        public ClassroomRegistrationTeacher(TeacherRegistrationID registrationID) : base(registrationID) { }
+
+
         //set method for registration detail
-        public void SetRegistrationDetail(RegistrationDetail registrationDetail)
+        public void SetRegistrationDetail(TeacherRegistrationDetail registrationDetail)
         {
             this.RegistrationDetail = registrationDetail;
-        }   
+        }
     }
 }

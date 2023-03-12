@@ -19,7 +19,8 @@ builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(
 ));
 
 builder.Services.AddScoped(typeof(IStoredEventRepository<>), typeof(StoredEventRepository<>));
-builder.Services.AddScoped<IStudentUseCaseGateway, StudentUseCaseGateway>();
+builder.Services.AddScoped<IStudentUseCaseGateway, StudentUseCase>();
+builder.Services.AddScoped<ITeacherUseCaseGateway, TeacherUseCase>();
 
 var app = builder.Build();
 

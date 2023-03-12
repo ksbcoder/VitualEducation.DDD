@@ -1,23 +1,17 @@
-﻿namespace VirtualEducation.DDD.Domain.Teacher.ValueObjects.ClassroomRegistration
+﻿using VirtualEducation.DDD.Domain.Commons;
+
+namespace VirtualEducation.DDD.Domain.Teacher.ValueObjects.ClassroomRegistration
 {
-    public record RegistrationID
+    public class TeacherRegistrationID : Identity
     {
-        //variables
-        public Guid Value { get; init; }
-        //constructor
-        internal RegistrationID(Guid id)
+        //contructor
+        internal TeacherRegistrationID(Guid id) : base(id) { } //internal para que solo se pueda crear desde la misma capa
+
+
+        //factory method: crea y devuelve una instancia usando el contructor
+        public static TeacherRegistrationID Of(Guid id)
         {
-            Value = id;
-        }
-        //create method
-        public static RegistrationID Create(Guid id)
-        {
-            return new RegistrationID(id);
-        }
-        //implicit assignment
-        public static implicit operator Guid(RegistrationID registrationID)
-        {
-            return registrationID.Value;
+            return new TeacherRegistrationID(id);
         }
     }
 }
