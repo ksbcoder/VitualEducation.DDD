@@ -1,14 +1,14 @@
 ﻿using VirtualEducation.DDD.Domain.Commons;
-using VirtualEducation.DDD.Domain.Student.Entities;
+using VirtualEducation.DDD.Domain.Student.ValueObjects.Student;
 
 namespace VirtualEducation.DDD.Domain.Classroom.Events
 {
-    public class StudentAdded :DomainEvent
+    public class StudentAdded : DomainEvent
     {
-        public Student.Entities.Student Student { get; init; }
-        public StudentAdded(Student.Entities.Student student) : base("classroom.student.added")
+        public StudentID StudentID { get; init; }
+        public StudentAdded(StudentID studentID) : base("classroom.student.added")
         {
-            Student = student;
+            StudentID = studentID;
         }
     }
 }

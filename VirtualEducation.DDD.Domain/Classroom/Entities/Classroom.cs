@@ -3,6 +3,8 @@ using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Assessment;
 using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Classroom;
 using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Courses;
 using VirtualEducation.DDD.Domain.Commons;
+using VirtualEducation.DDD.Domain.Student.ValueObjects.Student;
+using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher;
 
 namespace VirtualEducation.DDD.Domain.Classroom.Entities
 {
@@ -12,8 +14,8 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
         public ClassroomID ClassroomID { get; init; }
         public Preferences Preferences { get; private set; }
         //virtual navigation for entities
-        public virtual Student.Entities.Student Student { get; private set; }
-        public virtual Teacher.Entities.Teacher Teacher { get; private set; }
+        public virtual StudentID StudentID { get; private set; }
+        public virtual TeacherID TeacherID { get; private set; }
         public virtual List<Course>? Courses { get; private set; }
         public virtual List<Assessment>? Assessments { get; private set; }
 
@@ -57,9 +59,14 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
             AppendChange(new QualificationUpdated(qualification, assessmentId));
         }
         //student
-        public void SetStudent(Student.Entities.Student student)
+        public void SetStudent(StudentID studentID)
         {
-            AppendChange(new StudentAdded(student));
+            AppendChange(new StudentAdded(studentID));
+        }
+        //teacher
+        public void SetTeacher(TeacherID teacherID)
+        {
+            AppendChange(new TeacherAdded(teacherID));
         }
         #endregion
 
@@ -104,9 +111,14 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities
             }
         }
         //student
-        public void SetStudentAggregate(Student.Entities.Student student)
+        public void SetStudentAggregate(StudentID studentID)
         {
-            this.Student = student;
+            this.StudentID = studentID;
+        }
+        //teacher
+        public void SetTeacherAggregate(TeacherID teacherID)
+        {
+            this.TeacherID = teacherID;
         }
         #endregion
 

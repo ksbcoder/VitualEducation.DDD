@@ -2,6 +2,7 @@
 using VirtualEducation.DDD.Domain.Classroom.Commands.Classroom;
 using VirtualEducation.DDD.Domain.Classroom.Commands.Courses;
 using VirtualEducation.DDD.Domain.Classroom.Commands.Student;
+using VirtualEducation.DDD.Domain.Classroom.Commands.Teacher;
 
 namespace VirtualEducation.DDD.Domain.UseCases.Gateways
 {
@@ -14,6 +15,9 @@ namespace VirtualEducation.DDD.Domain.UseCases.Gateways
         Task<Classroom.Entities.Classroom> UpdateAssessment(UpdateAssessmentCommand updateAssessmentCommand);
         Task<Classroom.Entities.Classroom> GetClassroomById(string classroomId);
         //student aggregate
-        Task<Classroom.Entities.Classroom> AddStudentsToClassroom(ClassroomAddStudentsCommand classroomAddStudentsCommand);
+        Task<Classroom.Entities.Classroom> AddStudentToClassroom(ClassroomAddStudentCommand classroomAddStudentsCommand);
+        //teacher aggregate
+        Task<Classroom.Entities.Classroom> AddTeacherToClassroom(ClassroomAddTeacherCommand classroomAddTeacherCommand);
+
     }
 }

@@ -3,6 +3,7 @@ using VirtualEducation.DDD.Domain.Classroom.Commands.Assessments;
 using VirtualEducation.DDD.Domain.Classroom.Commands.Classroom;
 using VirtualEducation.DDD.Domain.Classroom.Commands.Courses;
 using VirtualEducation.DDD.Domain.Classroom.Commands.Student;
+using VirtualEducation.DDD.Domain.Classroom.Commands.Teacher;
 using VirtualEducation.DDD.Domain.Classroom.Entities;
 using VirtualEducation.DDD.Domain.Classroom.Entities.Rebuild;
 using VirtualEducation.DDD.Domain.Classroom.Events;
@@ -13,6 +14,8 @@ using VirtualEducation.DDD.Domain.Commons;
 using VirtualEducation.DDD.Domain.Generics;
 using VirtualEducation.DDD.Domain.Student.Entities.Rebuild;
 using VirtualEducation.DDD.Domain.Student.ValueObjects.Student;
+using VirtualEducation.DDD.Domain.Teacher.Entities.Rebuild;
+using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher;
 using VirtualEducation.DDD.Domain.UseCases.Gateways;
 using VirtualEducation.DDD.Domain.UseCases.Gateways.RepositoriesEvents;
 
@@ -158,25 +161,50 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             return classroomRebuilt;
         }
 
-        public async Task<Classroom.Entities.Classroom> AddStudentsToClassroom(ClassroomAddStudentsCommand classroomAddStudentsCommand)
+        public async Task<Classroom.Entities.Classroom> AddStudentToClassroom(ClassroomAddStudentCommand classroomAddStudentCommand)
         {
             var classroomRebuild = new ClassroomRebuild();
-            var listDomainEventsClassroom = await GetEventsClassroomByAggregateID(classroomAddStudentsCommand.ClassroomId);
-            var classroomID = ClassroomID.Of(Guid.Parse(classroomAddStudentsCommand.ClassroomId));
+            var listDomainEventsClassroom = await GetEventsClassroomByAggregateID(classroomAddStudentCommand.ClassroomId);
+            var classroomID = ClassroomID.Of(Guid.Parse(classroomAddStudentCommand.ClassroomId));
             var classroomRebuilt = classroomRebuild.CreateAggregate(listDomainEventsClassroom, classroomID);
+            AggregateID = classroomID.ID.ToString();
 
             var studentRebuild = new StudentRebuild();
-            var listDomainEventsStudent = await GetEventsByStudentAggregateID(classroomAddStudentsCommand.StudentId);
-            var studentID = StudentID.Of(Guid.Parse(classroomAddStudentsCommand.StudentId));
+            var listDomainEventsStudent = await GetEventsByStudentAggregateID(classroomAddStudentCommand.StudentId);
+            var studentID = StudentID.Of(Guid.Parse(classroomAddStudentCommand.StudentId));
             var studentRebuilt = studentRebuild.CreateAggregate(listDomainEventsStudent, studentID);
 
-            classroomRebuilt.SetStudent(studentRebuilt);
+            classroomRebuilt.SetStudent(studentRebuilt.StudentID);
 
             List<DomainEvent> domainEvents = classroomRebuilt.GetUncommittedChanges();
             await SaveEvents(domainEvents);
 
             classroomRebuild = new ClassroomRebuild();
-            listDomainEventsClassroom = await GetEventsClassroomByAggregateID(classroomAddStudentsCommand.ClassroomId);
+            listDomainEventsClassroom = await GetEventsClassroomByAggregateID(classroomAddStudentCommand.ClassroomId);
+            classroomRebuilt = classroomRebuild.CreateAggregate(listDomainEventsClassroom, classroomID);
+            return classroomRebuilt;
+        }
+
+        public async Task<Classroom.Entities.Classroom> AddTeacherToClassroom(ClassroomAddTeacherCommand classroomAddTeacherCommand)
+        {
+            var classroomRebuild = new ClassroomRebuild();
+            var listDomainEventsClassroom = await GetEventsClassroomByAggregateID(classroomAddTeacherCommand.ClassroomId);
+            var classroomID = ClassroomID.Of(Guid.Parse(classroomAddTeacherCommand.ClassroomId));
+            var classroomRebuilt = classroomRebuild.CreateAggregate(listDomainEventsClassroom, classroomID);
+            AggregateID = classroomID.ID.ToString();
+
+            var teacherRebuild = new TeacherRebuild();
+            var listDomainEventsTeacher = await GetEventsByTeacherAggregateID(classroomAddTeacherCommand.TeacherId);
+            var teacherID = TeacherID.Of(Guid.Parse(classroomAddTeacherCommand.TeacherId));
+            var teacherRebuilt = teacherRebuild.CreateAggregate(listDomainEventsTeacher, teacherID);
+
+            classroomRebuilt.SetTeacher(teacherRebuilt.TeacherID);
+
+            List<DomainEvent> domainEvents = classroomRebuilt.GetUncommittedChanges();
+            await SaveEvents(domainEvents);
+
+            classroomRebuild = new ClassroomRebuild();
+            listDomainEventsClassroom = await GetEventsClassroomByAggregateID(classroomAddTeacherCommand.ClassroomId);
             classroomRebuilt = classroomRebuild.CreateAggregate(listDomainEventsClassroom, classroomID);
             return classroomRebuilt;
         }
@@ -223,6 +251,10 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
                     case StudentAdded studentAdded:
                         stored.EventBody = JsonConvert.SerializeObject(studentAdded);
                         break;
+                    //teacher
+                    case TeacherAdded teacherAdded:
+                        stored.EventBody = JsonConvert.SerializeObject(teacherAdded);
+                        break;
                 }
                 await _storedEventRepository.AddAsync(stored);
             }
@@ -255,6 +287,23 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             return listadoStoredEvents.Select(ev =>
             {
                 string nombre = $"VirtualEducation.DDD.Domain.Student.Events.{ev.StoredName}, VirtualEducation.DDD.Domain";
+                Type tipo = Type.GetType(nombre);
+                DomainEvent eventoParseado = (DomainEvent)JsonConvert.DeserializeObject(ev.EventBody, tipo);
+                return eventoParseado;
+
+            }).ToList();
+        }
+
+        public async Task<List<DomainEvent>> GetEventsByTeacherAggregateID(string aggregateId)
+        {
+            var listadoStoredEvents = await _storedEventRepository.GetEventsByAggregateId(aggregateId);
+
+            if (listadoStoredEvents == null)
+                throw new ArgumentException("There isn't an aggregate with this id");
+
+            return listadoStoredEvents.Select(ev =>
+            {
+                string nombre = $"VirtualEducation.DDD.Domain.Teacher.Events.{ev.StoredName}, VirtualEducation.DDD.Domain";
                 Type tipo = Type.GetType(nombre);
                 DomainEvent eventoParseado = (DomainEvent)JsonConvert.DeserializeObject(ev.EventBody, tipo);
                 return eventoParseado;

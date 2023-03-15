@@ -8,7 +8,7 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities.Rebuild
     {
         public Classroom CreateAggregate(List<DomainEvent> ev, ClassroomID classroomID)
         {
-            Classroom classroom = new Classroom(classroomID);
+            Classroom classroom = new(classroomID);
             ev.ForEach(evento =>
             {
                 switch (evento)
@@ -40,7 +40,11 @@ namespace VirtualEducation.DDD.Domain.Classroom.Entities.Rebuild
                         break;
                     //student aggregate
                     case StudentAdded studentAdded:
-                        classroom.SetStudentAggregate(studentAdded.Student);
+                        classroom.SetStudentAggregate(studentAdded.StudentID);
+                        break;
+                    //teacher aggregate
+                    case TeacherAdded teacherAdded:
+                        classroom.SetTeacherAggregate(teacherAdded.TeacherID);
                         break;
                 }
             });

@@ -3,6 +3,7 @@ using VirtualEducation.DDD.Domain.Classroom.Commands.Assessments;
 using VirtualEducation.DDD.Domain.Classroom.Commands.Classroom;
 using VirtualEducation.DDD.Domain.Classroom.Commands.Courses;
 using VirtualEducation.DDD.Domain.Classroom.Commands.Student;
+using VirtualEducation.DDD.Domain.Classroom.Commands.Teacher;
 using VirtualEducation.DDD.Domain.Classroom.Entities;
 using VirtualEducation.DDD.Domain.UseCases.Gateways;
 
@@ -53,18 +54,18 @@ namespace VirtualEducation.DDD.API.Controllers
             return classroomWithAssessments;
         }
 
-        [HttpPost("addStudents")]
-        public async Task<Classroom> Add_Students_To_Classroom(ClassroomAddStudentsCommand command)
+        [HttpPost("addStudent")]
+        public async Task<Classroom> Add_Student_To_Classroom(ClassroomAddStudentCommand command)
         {
-            var classroomWithStudents = await _useCase.AddStudentsToClassroom(command);
+            var classroomWithStudents = await _useCase.AddStudentToClassroom(command);
             return classroomWithStudents;
         }
 
-        //[HttpPost("addTeachers")]
-        //public async Task<Classroom> Add_Teachers_To_Classroom(ClassroomAddTeachersCommand command)
-        //{
-        //    var classroomWithTeachers = await _useCase.AddTeachersToClassroom(command);
-        //    return classroomWithTeachers;
-        //}
+        [HttpPost("addTeacher")]
+        public async Task<Classroom> Add_Teacher_To_Classroom(ClassroomAddTeacherCommand command)
+        {
+            var classroomWithTeachers = await _useCase.AddTeacherToClassroom(command);
+            return classroomWithTeachers;
+        }
     }
 }
