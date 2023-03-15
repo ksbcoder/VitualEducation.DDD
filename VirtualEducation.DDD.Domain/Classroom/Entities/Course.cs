@@ -1,20 +1,19 @@
-﻿using System.Text.Json.Serialization;
-using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Classroom;
-using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Courses;
+﻿using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Courses;
 
 namespace VirtualEducation.DDD.Domain.Classroom.Entities
 {
-    public class Courses
+    public class Course
     {
         //variables
         public Guid CourseID { get; init; }
         public CourseDetail CourseDetail { get; private set; }
 
         //contructor
-        public Courses(Guid id)
+        public Course(Guid courseID)
         {
-            this.CourseID = id;
+            this.CourseID = courseID;
         }
+
         //set method for course detail
         public void SetCouseDetail(CourseDetail couseDetail)
         {

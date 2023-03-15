@@ -1,23 +1,23 @@
 ﻿namespace VirtualEducation.DDD.Domain.Classroom.ValueObjects.Assessment
 {
-    public record AssessmentID
+    public class AssessmentID
     {
-        //variables
-        public Guid Value { get; init; }
-        //constructor
-        internal AssessmentID(Guid id)
+        public Guid ID { get; init; }
+        public AssessmentID(Guid id)
         {
-            Value = id;
+            this.ID = id;
         }
-        //create method
-        public static AssessmentID Create(Guid id)
+
+        //factory method: crea y devuelve una instancia usando el contructor
+        public static AssessmentID Of(Guid id)
         {
             return new AssessmentID(id);
         }
-        //implicit assignment
+
+        //change any type to Guid
         public static implicit operator Guid(AssessmentID assessmentID)
         {
-            return assessmentID.Value;
+            return assessmentID.ID;
         }
     }
 }

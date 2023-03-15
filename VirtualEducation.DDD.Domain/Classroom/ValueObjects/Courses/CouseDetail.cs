@@ -1,15 +1,17 @@
 ﻿namespace VirtualEducation.DDD.Domain.Classroom.ValueObjects.Courses
 {
-    public record CourseDetail
+    public class CourseDetail
     {
         //variables
         public string CourseName { get; init; }
         public string CourseDescription { get; init; }
         public DateTime DateStart { get; init; }
         public DateTime DateEnd { get; init; }
-        public string Duration { get; init; }
+        public int Duration { get; init; }
+
+
         //constructor
-        internal CourseDetail(string courseName, string courseDescription, DateTime dateStart, DateTime dateEnd, string duration)
+        public CourseDetail(string courseName, string courseDescription, DateTime dateStart, DateTime dateEnd, int duration)
         {
             CourseName = courseName;
             CourseDescription = courseDescription;
@@ -17,14 +19,16 @@
             DateEnd = dateEnd;
             Duration = duration;
         }
+
+
         //create method
-        public static CourseDetail Create(string courseName, string courseDescription, DateTime dateStart, DateTime dateEnd, string duration)
+        public static CourseDetail Create(string courseName, string courseDescription, DateTime dateStart, DateTime dateEnd, int duration)
         {
             Validate(courseName, courseDescription, dateStart, dateEnd, duration);
             return new CourseDetail(courseName, courseDescription, dateStart, dateEnd, duration);
         }
         //validate method
-        public static void Validate(string courseName, string courseDescription, DateTime dateStart, DateTime dateEnd, string duration)
+        public static void Validate(string courseName, string courseDescription, DateTime dateStart, DateTime dateEnd, int duration)
         {
             if (courseName.Equals(null))
             {
@@ -45,6 +49,14 @@
             if (duration.Equals(null))
             {
                 throw new ArgumentNullException("Duration cannot be null");
+            }
+            if (dateStart > dateEnd)
+            {
+                throw new ArgumentException("Date start cannot be greater than date end");
+            }
+            if (duration < 0)
+            {
+                throw new ArgumentException("Duration cannot be less than 0");
             }
         }
     }

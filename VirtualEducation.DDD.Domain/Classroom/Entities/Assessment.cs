@@ -1,21 +1,21 @@
-﻿using System.Text.Json.Serialization;
-using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Assessment;
-using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Classroom;
+﻿using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Assessment;
 
 namespace VirtualEducation.DDD.Domain.Classroom.Entities
 {
-    public class Assessments
+    public class Assessment
     {
         //variables
         public Guid AssessmentID { get; init; }
         public Qualification Qualification { get; private set; }
 
 
-        //contructor
-        public Assessments(Guid id) 
-        { 
-            this.AssessmentID = id; 
+        //contructors
+        public Assessment(Guid assessmentID)
+        {
+            this.AssessmentID = assessmentID;
         }
+
+
         //set method for Qualification
         public void SetQualification(Qualification Qualification)
         {

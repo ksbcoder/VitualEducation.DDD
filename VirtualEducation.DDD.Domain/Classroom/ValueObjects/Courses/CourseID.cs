@@ -1,23 +1,23 @@
 ﻿namespace VirtualEducation.DDD.Domain.Classroom.ValueObjects.Courses
 {
-    public record CourseID
+    public class CourseID
     {
-        //variables
-        public Guid Value { get; init; }
-        //constructor
-        internal CourseID(Guid id)
+        public Guid ID { get; init; }
+        public CourseID(Guid id)
         {
-            Value = id;
+            ID = id;
         }
-        //create method
-        public static CourseID Create(Guid id)
+
+        //factory method: crea y devuelve una instancia usando el contructor
+        public static CourseID Of(Guid id)
         {
             return new CourseID(id);
         }
-        //implicit assignment
+
+        //chaange any type in Guid
         public static implicit operator Guid(CourseID courseID)
         {
-            return courseID.Value;
+            return courseID.ID;
         }
     }
 }

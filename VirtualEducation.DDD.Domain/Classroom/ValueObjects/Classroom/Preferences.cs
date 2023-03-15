@@ -1,22 +1,26 @@
 ﻿namespace VirtualEducation.DDD.Domain.Classroom.ValueObjects.Classroom
 {
-    public record Preferences
+    public class Preferences
     {
         //variables
-        public string Notifications { get; init; }
+        public bool Notifications { get; init; }
+
+
         //constructor
-        internal Preferences(string notifications)
+        public Preferences(bool notifications)
         {
             Notifications = notifications;
         }
+
+
         //create method
-        public static Preferences Create(string notifications)
+        public static Preferences Create(bool notifications)
         {
             Validate(notifications);
             return new Preferences(notifications);
         }
         //validate method
-        public static void Validate(string notifications)
+        public static void Validate(bool notifications)
         {
             if (notifications.Equals(null))
             {

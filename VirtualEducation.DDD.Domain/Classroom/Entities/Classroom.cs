@@ -1,50 +1,114 @@
-﻿using System.Text.Json.Serialization;
+﻿using VirtualEducation.DDD.Domain.Classroom.Events;
+using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Assessment;
 using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Classroom;
+using VirtualEducation.DDD.Domain.Classroom.ValueObjects.Courses;
+using VirtualEducation.DDD.Domain.Commons;
 
 namespace VirtualEducation.DDD.Domain.Classroom.Entities
 {
-    public class Classroom
+    public class Classroom : AggregateEvent
     {
         //variables
-        public Guid ClassroomID { get; init; }
+        public ClassroomID ClassroomID { get; init; }
         public Preferences Preferences { get; private set; }
         //virtual navigation for entities
-        [JsonIgnore]
-        public virtual List<Courses>? Courses { get; private set; }
-        public virtual List<Assessments>? Assessments { get; private set; }
+        public virtual Student.Entities.Student Student { get; private set; }
+        public virtual Teacher.Entities.Teacher Teacher { get; private set; }
+        public virtual List<Course>? Courses { get; private set; }
+        public virtual List<Assessment>? Assessments { get; private set; }
+
+
         //constructor
-        public Classroom(Guid id)
+        public Classroom(ClassroomID classroomID)
         {
-            this.ClassroomID = id;
+            this.ClassroomID = classroomID;
         }
 
-        //set method for preferences
+        #region Metodos del agregado como manejador de eventos
+        //Classroom
+        public void SetClassroomID(ClassroomID classroomID)
+        {
+            AppendChange(new ClassroomCreated(classroomID.ToString()));
+        }
         public void SetPreferences(Preferences preferences)
+        {
+            AppendChange(new PreferencesAdded(preferences));
+        }
+        //Courses
+        public void SetCourseToClassroom(Course course)
+        {
+            AppendChange(new CourseAdded(course));
+        }
+        public void SetDetailToCourse(CourseDetail courseDetail)
+        {
+            AppendChange(new CourseDetailAdded(courseDetail));
+        }
+        //Assessments
+        public void SetAssessmentToClassroom(Assessment assessment)
+        {
+            AppendChange(new AssessmentAdded(assessment));
+        }
+        public void SetQualificationToAssessment(Qualification qualification)
+        {
+            AppendChange(new AssessmentQualificationAdded(qualification));
+        }
+        public void SetQualificationUpdatedToAssessment(Qualification qualification, string assessmentId)
+        {
+            AppendChange(new QualificationUpdated(qualification, assessmentId));
+        }
+        //student
+        public void SetStudent(Student.Entities.Student student)
+        {
+            AppendChange(new StudentAdded(student));
+        }
+        #endregion
+
+        #region Metodos del agregado como manejador de eventos
+        //Classroom
+        public void SetPreferencesAggregate(Preferences preferences)
         {
             this.Preferences = preferences;
         }
-
-        //set method for courses
-        public void SetCourses(List<Courses> courses)
+        //Courses
+        public void SetCoursesAggregate(Course course)
         {
-            this.Courses = courses;
-        }
-        //add method for courses
-        public void AddCourse(Courses course)
-        {
-            this.Courses ??= new List<Courses>();
+            this.Courses ??= new();
             this.Courses.Add(course);
         }
-        //set method for assessments
-        public void SetAssessments(List<Assessments> assessments)
+        public void SetDetailToCourseAggregate(CourseDetail courseDetail)
         {
-            this.Assessments = assessments;
+            this.Courses.Last().SetCouseDetail(courseDetail);
         }
-        //add method for assessments
-        public void AddAssessment(Assessments assessment)
+        //Assessments
+        public void SetAssessmentsAggregate(Assessment assessment)
         {
-            this.Assessments ??= new List<Assessments>();
+            this.Assessments ??= new();
             this.Assessments.Add(assessment);
         }
+        public void SetQualificationAggregate(Qualification qualification)
+        {
+            this.Assessments.Last().SetQualification(qualification);
+        }
+        public static void SetQualificationUpdatedAggregate(
+            List<Assessment> assessments,
+            Qualification qualification,
+            string assessmentId
+            )
+        {
+            foreach (var ass in assessments)
+            {
+                if (ass.AssessmentID.Equals(Guid.Parse(assessmentId)))
+                {
+                    ass.SetQualification(qualification);
+                }
+            }
+        }
+        //student
+        public void SetStudentAggregate(Student.Entities.Student student)
+        {
+            this.Student = student;
+        }
+        #endregion
+
     }
 }
