@@ -1,7 +1,6 @@
 ﻿using VirtualEducation.DDD.Domain.Teacher.Commands.Account;
 using VirtualEducation.DDD.Domain.Teacher.Commands.ClassroomRegistration;
 using VirtualEducation.DDD.Domain.Teacher.Commands.Teacher;
-using VirtualEducation.DDD.Domain.Teacher.Entities;
 
 namespace VirtualEducation.DDD.Domain.UseCases.Gateways
 {

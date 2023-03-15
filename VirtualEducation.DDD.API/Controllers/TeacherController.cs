@@ -9,7 +9,7 @@ namespace VirtualEducation.DDD.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TeacherController
+    public class TeacherController : ControllerBase
     {
         private readonly ITeacherUseCaseGateway _useCase;
         public TeacherController(ITeacherUseCaseGateway teacherUseCaseGateway)

@@ -1,18 +1,21 @@
-﻿using VirtualEducation.DDD.Domain.Commons;
-using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Account;
+﻿using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Account;
 
 namespace VirtualEducation.DDD.Domain.Teacher.Entities
 {
-    public class AccountTeacher : Entity<TeacherAccountID>
+    public class AccountTeacher
     {
         //variables
+        public TeacherAccountID AccountID { get; private set; }
         public TeacherAccountDetail AccountDetail { get; private set; }
         public TeacherEmail Email { get; private set; }
         public TeacherPermissions Permissions { get; private set; }
 
 
         //constructor
-        public AccountTeacher(TeacherAccountID accountID) : base(accountID) { }
+        public AccountTeacher(TeacherAccountID accountID)
+        {
+            this.AccountID = accountID;
+        }
 
 
         //set method for account detail 

@@ -6,7 +6,7 @@ using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher;
 
 namespace VirtualEducation.DDD.Domain.Teacher.Entities
 {
-    public class Teacher : AggregateEvent<TeacherID>
+    public class Teacher : AggregateEvent
     {
         //variables
         public TeacherID TeacherID { get; init; }
@@ -17,7 +17,7 @@ namespace VirtualEducation.DDD.Domain.Teacher.Entities
 
         #region Metodos del agregado como manejador de eventos
         //Teacher
-        public Teacher(TeacherID teacherID) : base(teacherID)
+        public Teacher(TeacherID teacherID)
         {
             this.TeacherID = teacherID;
         }
@@ -62,13 +62,13 @@ namespace VirtualEducation.DDD.Domain.Teacher.Entities
         #endregion
 
         #region Metodos de cambio del agregado como entidad
-        //Student
+        //teacher
         public void SetPersonalDataAggregate(TeacherPersonalData personalData)
         {
             PersonalData = personalData;
         }
         //Account
-        public void SetAccountAggregate(AccountTeacher accountTeacher) 
+        public void SetAccountAggregate(AccountTeacher accountTeacher)
         {
             AccountTeacher = accountTeacher;
         }

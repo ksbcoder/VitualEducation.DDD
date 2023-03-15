@@ -15,7 +15,7 @@ namespace VirtualEducation.DDD.Domain.Teacher.Entities.Rebuild
                 teacher.SetAccountAggregate(accountAddedEvent.AccountTeacher);
             }
             //Add classroom registration to set your VOs
-            if (ev.Find(e => e.GetType() == typeof(ClassroomRegistrationAdded)) 
+            if (ev.Find(e => e.GetType() == typeof(ClassroomRegistrationAdded))
                 is ClassroomRegistrationAdded classroomRegistrationAddedEvent)
             {
                 teacher.SetClassroomRegistrationAggregate(classroomRegistrationAddedEvent.ClassroomRegistration);

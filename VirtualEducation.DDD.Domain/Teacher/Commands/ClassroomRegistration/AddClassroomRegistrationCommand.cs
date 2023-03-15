@@ -3,6 +3,6 @@
     public class TeacherAddClassroomRegistrationCommand
     {
         public string TeacherId { get; init; }
-        public DateTime RegistratedAt { get; init; } = DateTime.UtcNow;
+        public DateTime RegistratedAt { get; init; }
     }
 }

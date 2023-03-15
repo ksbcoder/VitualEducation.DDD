@@ -11,7 +11,7 @@ using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Account;
 using VirtualEducation.DDD.Domain.Teacher.ValueObjects.ClassroomRegistration;
 using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher;
 using VirtualEducation.DDD.Domain.UseCases.Gateways;
-using VirtualEducation.DDD.Domain.UseCases.Gateways.Repositories;
+using VirtualEducation.DDD.Domain.UseCases.Gateways.RepositoriesEvents;
 
 namespace VirtualEducation.DDD.Domain.UseCases.UseCases
 {
@@ -25,16 +25,20 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
         }
 
         #region Aggregate methods
+        private string AggregateID;
         public async Task<Teacher.Entities.Teacher> CreateTeacher(CreateTeacherCommand createTeacherCommand)
         {
             var teacher = new Teacher.Entities.Teacher(TeacherID.Of(Guid.NewGuid()));
-            teacher.SetTeacherID(teacher.TeacherID);
+            AggregateID = teacher.TeacherID.ID.ToString();
+
             var personalData = TeacherPersonalData.Create(
                 createTeacherCommand.Name,
                 createTeacherCommand.LastName,
                 createTeacherCommand.Age,
                 createTeacherCommand.Gender
                 );
+
+            teacher.SetTeacherID(teacher.TeacherID);
             teacher.SetPersonalData(personalData);
             List<DomainEvent> domainEvents = teacher.GetUncommittedChanges();
             await SaveEvents(domainEvents);
@@ -51,6 +55,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             var listDomainEvents = await GetEventsByAggregateID(addAccountCommand.TeacherId);
             var teacherID = TeacherID.Of(Guid.Parse(addAccountCommand.TeacherId));
             var teacherRebuilt = teacherRebuild.CreateAggregate(listDomainEvents, teacherID);
+            AggregateID = teacherID.ID.ToString();
 
             #region account creating
             var account = new AccountTeacher(TeacherAccountID.Of(Guid.NewGuid()));
@@ -67,12 +72,14 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
                 );
             #endregion
 
+            #region set events
             teacherRebuilt.SetAccountToTeacher(account);
             teacherRebuilt.SetDetailsToAccount(accountDetail);
             teacherRebuilt.SetEmailToAccount(email);
             teacherRebuilt.SetPermissionsToAccount(permissions);
             List<DomainEvent> domainEvents = teacherRebuilt.GetUncommittedChanges();
             await SaveEvents(domainEvents);
+            #endregion
 
             //show the teacher on response
             teacherRebuild = new TeacherRebuild();
@@ -88,6 +95,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             var listDomainEvents = await GetEventsByAggregateID(addClassroomRegistrationCommand.TeacherId);
             var teacherID = TeacherID.Of(Guid.Parse(addClassroomRegistrationCommand.TeacherId));
             var teacherRebuilt = teacherRebuild.CreateAggregate(listDomainEvents, teacherID);
+            AggregateID = teacherID.ID.ToString();
 
             #region classroom registration creating
             var classroomRegistration = new ClassroomRegistrationTeacher(TeacherRegistrationID.Of(Guid.NewGuid()));
@@ -114,6 +122,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             var listDomainEvents = await GetEventsByAggregateID(updateEmailCommand.TeacherId);
             var teacherID = TeacherID.Of(Guid.Parse(updateEmailCommand.TeacherId));
             var teacherRebuilt = teacherRebuild.CreateAggregate(listDomainEvents, teacherID);
+            AggregateID = teacherID.ID.ToString();
 
             var email = TeacherEmail.Create(
                 updateEmailCommand.PersonalMail,
@@ -148,6 +157,8 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             var array = list.ToArray();
             for (var index = 0; index < array.Length; index++)
             {
+                //set aggregate id to events
+                array[index].SetAggregateId(AggregateID);
                 var stored = new StoredEvent();
                 stored.AggregateId = array[index].GetAggregateId();
                 stored.StoredName = array[index].GetAggregate();
