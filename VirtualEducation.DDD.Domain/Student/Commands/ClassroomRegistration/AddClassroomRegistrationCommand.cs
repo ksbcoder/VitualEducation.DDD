@@ -1,8 +1,8 @@
 ﻿namespace VirtualEducation.DDD.Domain.Student.Commands.ClassroomRegistration
 {
-    public class AddClassroomRegistrationCommand
+    public class StudentAddClassroomRegistrationCommand
     {
         public string StudentId { get; init; }
-        public DateTime RegistratedAt { get; init; } = DateTime.UtcNow;
+        public DateTime RegistratedAt { get; init; } = DateTime.Now;
     }
 }

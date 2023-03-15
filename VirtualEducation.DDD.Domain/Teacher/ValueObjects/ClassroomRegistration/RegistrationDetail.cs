@@ -1,19 +1,23 @@
 ﻿namespace VirtualEducation.DDD.Domain.Teacher.ValueObjects.ClassroomRegistration
 {
-    public record RegistrationDetail
+    public class TeacherRegistrationDetail
     {
         //variables
         public DateTime RegistratedAt { get; init; }
+
+
         //contructor
-        internal RegistrationDetail(DateTime registratedAt)
+        public TeacherRegistrationDetail(DateTime registratedAt)
         {
             RegistratedAt = registratedAt;
         }
+
+
         //create method
-        public static RegistrationDetail Create(DateTime registratedAt)
+        public static TeacherRegistrationDetail Create(DateTime registratedAt)
         {
             Validate(registratedAt);
-            return new RegistrationDetail(registratedAt);
+            return new TeacherRegistrationDetail(registratedAt);
         }
         //validate method
         public static void Validate(DateTime registratedAt)

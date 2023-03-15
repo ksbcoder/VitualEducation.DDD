@@ -1,5 +1,6 @@
 ﻿namespace VirtualEducation.DDD.Domain.Commons
 {
+    //NOT USE. Only for example
     public class Identity
     {
         public Guid Uuid { get; set; }

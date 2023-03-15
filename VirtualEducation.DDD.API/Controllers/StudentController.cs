@@ -8,41 +8,38 @@ using VirtualEducation.DDD.Domain.UseCases.Gateways;
 namespace VirtualEducation.DDD.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class StudentController : ControllerBase
     {
-
-
         private readonly IStudentUseCaseGateway _useCase;
-
-        public StudentController(IStudentUseCaseGateway createStudentUseCase)
+        public StudentController(IStudentUseCaseGateway studentUseCaseGateway)
         {
-            _useCase = createStudentUseCase;
+            _useCase = studentUseCaseGateway;
         }
 
         [HttpGet("{id}")]
-        public async Task<Student> Get(string id)
+        public async Task<Student> GetStudentById(string id)
         {
             var student = await _useCase.GetStudentById(id);
             return student;
         }
 
         [HttpPost]
-        public async Task<Student> Post(CreateStudentCommand command)
+        public async Task<Student> CreateStudent(CreateStudentCommand command)
         {
             var studentCreated = await _useCase.CreateStudent(command);
             return studentCreated;
         }
 
         [HttpPost("addAcount")]
-        public async Task<Student> Add_Account_To_Student(AddAccountCommand command)
+        public async Task<Student> Add_Account_To_Student(StudentAddAccountCommand command)
         {
             var studentWithAccount = await _useCase.AddAcountToStudent(command);
             return studentWithAccount;
         }
 
         [HttpPatch("updateAccountDetail")]
-        public async Task<Student> Update_Account_Detail(UpdateAccountDetailCommand command)
+        public async Task<Student> Update_Account_Detail(StudentUpdateAccountDetailCommand command)
         {
             var studentWithAccountUpdated = await _useCase.UpdateAccountDetail(command);
             return studentWithAccountUpdated;
@@ -50,7 +47,7 @@ namespace VirtualEducation.DDD.API.Controllers
 
         [HttpPost("addClassroomRegistration")]
         public async Task<Student> Add_Classroom_Registration_To_Student
-            (AddClassroomRegistrationCommand command)
+            (StudentAddClassroomRegistrationCommand command)
         {
             var studentWithClassroomRegistration = await _useCase.AddClassroomRegistrationToStudent(command);
             return studentWithClassroomRegistration;

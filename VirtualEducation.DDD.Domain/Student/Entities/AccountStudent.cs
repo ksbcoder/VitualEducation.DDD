@@ -1,32 +1,35 @@
-﻿using VirtualEducation.DDD.Domain.Commons;
-using VirtualEducation.DDD.Domain.Student.ValueObjects.Account;
+﻿using VirtualEducation.DDD.Domain.Student.ValueObjects.Account;
 
 namespace VirtualEducation.DDD.Domain.Student.Entities
 {
-    public class AccountStudent : Entity<AccountID>
+    public class AccountStudent
     {
         //variables
-        public AccountDetail AccountDetail { get; private set; }
-        public Email Email { get; private set; }
-        public Permissions Permissions { get; private set; }
+        public StudentAccountID AccountID { get; init; }
+        public StudentAccountDetail AccountDetail { get; private set; }
+        public StudentEmail Email { get; private set; }
+        public StudentPermissions Permissions { get; private set; }
 
 
         //constructor
-        public AccountStudent(AccountID accountID) : base(accountID) { }
+        public AccountStudent(StudentAccountID accountID)
+        {
+            this.AccountID = accountID;
+        }
 
 
         //set method for account detail
-        public void SetAccountDetail(AccountDetail accountDetail)
+        public void SetAccountDetail(StudentAccountDetail accountDetail)
         {
             this.AccountDetail = accountDetail;
         }
         //set method for email
-        public void SetEmail(Email email)
+        public void SetEmail(StudentEmail email)
         {
             this.Email = email;
         }
         //set method for permissions
-        public void SetPermissions(Permissions permissions)
+        public void SetPermissions(StudentPermissions permissions)
         {
             this.Permissions = permissions;
         }

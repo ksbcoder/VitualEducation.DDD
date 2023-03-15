@@ -1,16 +1,20 @@
 ﻿namespace VirtualEducation.DDD.Domain.Classroom.ValueObjects.Assessment
 {
-    public record Qualification
+    public class Qualification
     {
         //variables
         public int Rating { get; init; }
         public string Feedback { get; init; }
+
+
         //constructor
-        internal Qualification(int rating, string feedback)
+        public Qualification(int rating, string feedback)
         {
             Rating = rating;
             Feedback = feedback;
         }
+
+
         //create method
         public static Qualification Create(int rating, string feedback)
         {

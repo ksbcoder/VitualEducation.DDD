@@ -5,9 +5,9 @@ namespace VirtualEducation.DDD.Domain.Student.Events
 {
     public class PersonalDataAdded : DomainEvent
     {
-        public PersonalData PersonalData { get; set; }
+        public StudentPersonalData PersonalData { get; set; }
 
-        public PersonalDataAdded(PersonalData personalData) : base("student.personaldata.added")
+        public PersonalDataAdded(StudentPersonalData personalData) : base("student.personaldata.added")
         {
             PersonalData = personalData;
         }

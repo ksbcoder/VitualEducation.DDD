@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VirtualEducation.DDD.Domain.UseCases.Gateways;
-using VirtualEducation.DDD.Domain.UseCases.Gateways.Repositories;
+using VirtualEducation.DDD.Domain.UseCases.Gateways.RepositoriesEvents;
 using VirtualEducation.DDD.Domain.UseCases.UseCases;
 using VirtualEducation.DDD.Infrastructure;
 
@@ -19,7 +19,9 @@ builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(
 ));
 
 builder.Services.AddScoped(typeof(IStoredEventRepository<>), typeof(StoredEventRepository<>));
-builder.Services.AddScoped<IStudentUseCaseGateway, StudentUseCaseGateway>();
+builder.Services.AddScoped<IStudentUseCaseGateway, StudentUseCase>();
+builder.Services.AddScoped<ITeacherUseCaseGateway, TeacherUseCase>();
+builder.Services.AddScoped<IClassroomUseCaseGateway, ClassroomUseCase>();
 
 var app = builder.Build();
 

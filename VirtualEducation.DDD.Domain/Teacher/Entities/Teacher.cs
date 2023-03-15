@@ -1,46 +1,82 @@
-﻿using System.Text.Json.Serialization;
+﻿using VirtualEducation.DDD.Domain.Commons;
+using VirtualEducation.DDD.Domain.Teacher.Events;
 using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Account;
 using VirtualEducation.DDD.Domain.Teacher.ValueObjects.ClassroomRegistration;
 using VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher;
 
 namespace VirtualEducation.DDD.Domain.Teacher.Entities
 {
-    public class Teacher
+    public class Teacher : AggregateEvent
     {
         //variables
-        public Guid TeacherID { get; init; }
-        public Guid AccountID { get; private set; }
-        public Guid ClassroomRegistrationID { get; private set; }
-        public PersonalData PersonalData { get; private set; }
+        public TeacherID TeacherID { get; init; }
+        public TeacherPersonalData PersonalData { get; private set; }
         //virtual navigation
-        [JsonIgnore]
-        public virtual AccountTeacher? Account { get; private set; }
-        public virtual ClassroomRegistrationTeacher? ClassroomRegistration { get; private set; }
-        //constructor
-        public Teacher(Guid id, AccountTeacher accountTeacher)
+        public virtual AccountTeacher AccountTeacher { get; private set; }
+        public virtual ClassroomRegistrationTeacher ClassroomRegistrationTeacher { get; private set; }
+
+        #region Metodos del agregado como manejador de eventos
+        //Teacher
+        public Teacher(TeacherID teacherID)
         {
-            this.TeacherID = id;
-            this.AccountID = accountTeacher.AccountID;
+            this.TeacherID = teacherID;
         }
-        //set method for classroom registration id
-        public void SetClassroomRegistrationID(RegistrationID registrationID)
+        public void SetTeacherID(TeacherID studentID)
         {
-            this.ClassroomRegistrationID = registrationID;
+            AppendChange(new TeacherCreated(studentID.ToString()));
         }
-        //set method for personal data
-        public void SetPersonalData(PersonalData personalData)
+        public void SetPersonalData(TeacherPersonalData personalData)
         {
-            this.PersonalData = personalData;
+            AppendChange(new PersonalDataAdded(personalData));
         }
-        //set method for account
-        public void SetAccount(AccountTeacher accountTeacher)
+        //Account
+        public void SetAccountToTeacher(AccountTeacher accountToTeacher)
         {
-            this.Account = accountTeacher;
+            AppendChange(new AccountAdded(accountToTeacher));
         }
-        //set method for classroom registration
+        public void SetDetailsToAccount(TeacherAccountDetail accountDetail)
+        {
+            AppendChange(new AccountDetailAdded(accountDetail));
+        }
+        public void SetEmailToAccount(TeacherEmail email)
+        {
+            AppendChange(new EmailAdded(email));
+        }
+        public void SetPermissionsToAccount(TeacherPermissions permissions)
+        {
+            AppendChange(new PermissionsAdded(permissions));
+        }
+        public void SetEmailUpdatedToAccount(TeacherEmail email)
+        {
+            AppendChange(new EmailUpdated(email));
+        }
+        //Classroom
         public void SetClassroomRegistration(ClassroomRegistrationTeacher classroomRegistrationTeacher)
         {
-            this.ClassroomRegistration = classroomRegistrationTeacher;
+            AppendChange(new ClassroomRegistrationAdded(classroomRegistrationTeacher));
         }
+        public void SetDetailToClassroomRegistration(TeacherRegistrationDetail registrationDetail)
+        {
+            AppendChange(new ClassroomRegistrationDetailAdded(registrationDetail));
+        }
+        #endregion
+
+        #region Metodos de cambio del agregado como entidad
+        //teacher
+        public void SetPersonalDataAggregate(TeacherPersonalData personalData)
+        {
+            PersonalData = personalData;
+        }
+        //Account
+        public void SetAccountAggregate(AccountTeacher accountTeacher)
+        {
+            AccountTeacher = accountTeacher;
+        }
+        //Classroom
+        public void SetClassroomRegistrationAggregate(ClassroomRegistrationTeacher classroomRegistrationTeacher)
+        {
+            ClassroomRegistrationTeacher = classroomRegistrationTeacher;
+        }
+        #endregion
     }
 }

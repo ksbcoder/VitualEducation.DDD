@@ -5,9 +5,9 @@ namespace VirtualEducation.DDD.Domain.Student.Events
 {
     public class AccountDetailAdded : DomainEvent
     {
-        public AccountDetail AccountDetail { get; set; }
+        public StudentAccountDetail AccountDetail { get; set; }
 
-        public AccountDetailAdded(AccountDetail accountDetail) : base("student.account.detail.added")
+        public AccountDetailAdded(StudentAccountDetail accountDetail) : base("student.account.detail.added")
         {
             AccountDetail = accountDetail;
         }

@@ -1,23 +1,24 @@
 ﻿namespace VirtualEducation.DDD.Domain.Teacher.ValueObjects.Account
 {
-    public record AccountID
+    public class TeacherAccountID
     {
-        //variables
-        public Guid Value { get; init; }
-        //constructor
-        internal AccountID(Guid id)
+        public Guid ID { get; init; }
+        //contructor
+        public TeacherAccountID(Guid id)
         {
-            Value = id;
+            this.ID = id;
         }
-        //create method
-        public static AccountID Create(Guid id)
+
+        //factory method: crea y devuelve una instancia usando el contructor
+        public static TeacherAccountID Of(Guid id)
         {
-            return new AccountID(id);
+            return new TeacherAccountID(id);
         }
-        //implicit assignment
-        public static implicit operator Guid(AccountID accountID)
+
+        //change any type in Guid
+        public static implicit operator Guid(TeacherAccountID teacherAccountID)
         {
-            return accountID.Value;
+            return teacherAccountID.ID;
         }
     }
 }

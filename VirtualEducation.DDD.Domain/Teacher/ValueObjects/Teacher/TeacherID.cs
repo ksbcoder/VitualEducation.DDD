@@ -1,23 +1,25 @@
-﻿namespace VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher
+﻿using VirtualEducation.DDD.Domain.Commons;
+
+namespace VirtualEducation.DDD.Domain.Teacher.ValueObjects.Teacher
 {
-    public record TeacherID
+    public class TeacherID
     {
-        //variables
-        public Guid Value { get; init; }
-        //constructor
-        internal TeacherID(Guid id)
+        public Guid ID { get; init; }
+        public TeacherID(Guid id)
         {
-            Value = id;
+            this.ID = id;
         }
-        //create method
-        public static TeacherID Create(Guid id)
+
+        //factory method: crea y devuelve una instancia usando el contructor
+        public static TeacherID Of(Guid id)
         {
             return new TeacherID(id);
         }
-        //implicit assignment
+
+        //change any type to Guid
         public static implicit operator Guid(TeacherID teacherID)
         {
-            return teacherID.Value;
+            return teacherID.ID;
         }
     }
 }

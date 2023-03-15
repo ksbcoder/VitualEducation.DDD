@@ -5,9 +5,9 @@ namespace VirtualEducation.DDD.Domain.Student.Events
 {
     public class PermissionsAdded : DomainEvent
     {
-        public Permissions Permissions { get; set; }
+        public StudentPermissions Permissions { get; set; }
 
-        public PermissionsAdded(Permissions permissions) : base("student.account.permissions.added")
+        public PermissionsAdded(StudentPermissions permissions) : base("student.account.permissions.added")
         {
             Permissions = permissions;
         }

@@ -1,6 +1,6 @@
 ﻿namespace VirtualEducation.DDD.Domain.Student.ValueObjects.Account
 {
-    public class Email
+    public class StudentEmail
     {
         //variables
         public string PersonalMail { get; init; }
@@ -8,17 +8,17 @@
 
 
         //constructor
-        public Email(string personalMail, string institutionalMail)
+        public StudentEmail(string personalMail, string institutionalMail)
         {
             PersonalMail = personalMail;
             InstitutionalMail = institutionalMail;
         }
 
         //create method
-        public static Email Create(string personalMail, string institutionalMail)
+        public static StudentEmail Create(string personalMail, string institutionalMail)
         {
             Validate(personalMail, institutionalMail);
-            return new Email(personalMail, institutionalMail);
+            return new StudentEmail(personalMail, institutionalMail);
         }
         //validate method
         public static void Validate(string personalMail, string institutionalMail)
