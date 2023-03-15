@@ -1,7 +1,7 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using VirtualEducation.DDD.Domain.Generics;
-using VirtualEducation.DDD.Domain.UseCases.Gateways.Repositories;
+using VirtualEducation.DDD.Domain.UseCases.Gateways.RepositoriesEvents;
 
 namespace VirtualEducation.DDD.Infrastructure
 {
