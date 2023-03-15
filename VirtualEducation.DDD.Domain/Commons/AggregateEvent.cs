@@ -1,11 +1,9 @@
 ﻿namespace VirtualEducation.DDD.Domain.Commons
 {
-    public abstract class AggregateEvent<T> : Entity<T> where T : Identity
+    public abstract class AggregateEvent
     {
 
         private ChangeEventSuscriber ChangeEventSuscriber = new();
-
-        protected AggregateEvent(T entityId) : base(entityId) { }
 
         public List<DomainEvent> GetUncommittedChanges() => ChangeEventSuscriber.GetChanges().ToList();
 
@@ -13,7 +11,8 @@
         {
             string nameClass = evento.GetType().Name;
             evento.SetAggregate(nameClass);
-            evento.SetAggregateId(Identity().Uuid.ToString());
+            //the follow line is executed in the use case save event (Methods SaveEvents)
+            //evento.SetAggregateId();
             ChangeEventSuscriber.AppendChange(evento);
         }
     }
