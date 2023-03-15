@@ -12,9 +12,9 @@ namespace VirtualEducation.DDD.API.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentUseCaseGateway _useCase;
-        public StudentController(IStudentUseCaseGateway createStudentUseCase)
+        public StudentController(IStudentUseCaseGateway studentUseCaseGateway)
         {
-            _useCase = createStudentUseCase;
+            _useCase = studentUseCaseGateway;
         }
 
         [HttpGet("{id}")]

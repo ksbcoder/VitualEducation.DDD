@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using VirtualEducation.DDD.Domain.Commons;
+﻿using VirtualEducation.DDD.Domain.Commons;
 using VirtualEducation.DDD.Domain.Student.Events;
 using VirtualEducation.DDD.Domain.Student.ValueObjects.Account;
 using VirtualEducation.DDD.Domain.Student.ValueObjects.ClassroomRegistration;
@@ -7,7 +6,7 @@ using VirtualEducation.DDD.Domain.Student.ValueObjects.Student;
 
 namespace VirtualEducation.DDD.Domain.Student.Entities
 {
-    public class Student : AggregateEvent<StudentID>
+    public class Student : AggregateEvent
     {
         //variables
         public StudentID StudentID { get; init; }
@@ -19,14 +18,14 @@ namespace VirtualEducation.DDD.Domain.Student.Entities
 
         #region Metodos del agregado como manejador de eventos
         //Student
-        public Student(StudentID studentID) : base(studentID)
+        public Student(StudentID studentID)
         {
             this.StudentID = studentID;
         }
 
         public void SetStudentID(StudentID studentID)
         {
-            AppendChange(new StudentCreated(studentID.ToString()));
+            AppendChange(new StudentCreated(studentID.ID.ToString()));
         }
         public void SetPersonalData(StudentPersonalData personalData)
         {

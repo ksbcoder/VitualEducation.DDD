@@ -12,7 +12,7 @@ namespace VirtualEducation.DDD.Domain.Student.Entities.Rebuild
             //Add account to set your VOs
             if (ev.Find(e => e.GetType() == typeof(AccountAdded)) is AccountAdded accountAddedEvent)
             {
-                student.SetAccountAggregate(accountAddedEvent.Account);
+                student.SetAccountAggregate(accountAddedEvent.AccountStudent);
             }
             //Add classroom registration to set your VOs
             if (ev.Find(e => e.GetType() == typeof(ClassroomRegistrationAdded)) is ClassroomRegistrationAdded classroomRegistrationAddedEvent)

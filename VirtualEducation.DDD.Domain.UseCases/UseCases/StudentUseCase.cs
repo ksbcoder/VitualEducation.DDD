@@ -1,17 +1,17 @@
-﻿using VirtualEducation.DDD.Domain.Commons;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using VirtualEducation.DDD.Domain.Commons;
 using VirtualEducation.DDD.Domain.Generics;
-using VirtualEducation.DDD.Domain.Student.Commands.Student;
-using VirtualEducation.DDD.Domain.Student.ValueObjects.Student;
-using VirtualEducation.DDD.Domain.UseCases.Gateways.Repositories;
-using VirtualEducation.DDD.Domain.UseCases.Gateways;
 using VirtualEducation.DDD.Domain.Student.Commands.Account;
+using VirtualEducation.DDD.Domain.Student.Commands.ClassroomRegistration;
+using VirtualEducation.DDD.Domain.Student.Commands.Student;
 using VirtualEducation.DDD.Domain.Student.Entities;
-using VirtualEducation.DDD.Domain.Student.ValueObjects.Account;
 using VirtualEducation.DDD.Domain.Student.Entities.Rebuild;
 using VirtualEducation.DDD.Domain.Student.Events;
-using VirtualEducation.DDD.Domain.Student.Commands.ClassroomRegistration;
+using VirtualEducation.DDD.Domain.Student.ValueObjects.Account;
 using VirtualEducation.DDD.Domain.Student.ValueObjects.ClassroomRegistration;
+using VirtualEducation.DDD.Domain.Student.ValueObjects.Student;
+using VirtualEducation.DDD.Domain.UseCases.Gateways;
+using VirtualEducation.DDD.Domain.UseCases.Gateways.RepositoriesEvents;
 
 namespace VirtualEducation.DDD.Domain.UseCases.UseCases
 {
@@ -25,10 +25,13 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
         }
 
         #region Aggregate methods
+        //for save aggregateid in events
+        private string AggregateID;
         public async Task<Student.Entities.Student> CreateStudent(CreateStudentCommand createStudentCommand)
         {
             var student = new Student.Entities.Student(StudentID.Of(Guid.NewGuid()));
-            student.SetStudentID(student.StudentID);
+            AggregateID = student.StudentID.ID.ToString();
+
             var personalData = StudentPersonalData.Create(
                 createStudentCommand.Name,
                 createStudentCommand.LastName,
@@ -36,6 +39,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
                 createStudentCommand.Gender
                 );
 
+            student.SetStudentID(student.StudentID);
             student.SetPersonalData(personalData);
             List<DomainEvent> domainEvents = student.GetUncommittedChanges();
             await SaveEvents(domainEvents);
@@ -52,6 +56,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             var listDomainEvents = await GetEventsByAggregateID(addAccountCommand.StudentId);
             var studentID = StudentID.Of(Guid.Parse(addAccountCommand.StudentId));
             var studentRebuilt = studentRebuild.CreateAggregate(listDomainEvents, studentID);
+            AggregateID = studentID.ID.ToString();
 
             #region Account Creating
             var account = new AccountStudent(StudentAccountID.Of(Guid.NewGuid()));
@@ -89,6 +94,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             var listDomainEvents = await GetEventsByAggregateID(addClassroomRegistrationCommand.StudentId);
             var studentID = StudentID.Of(Guid.Parse(addClassroomRegistrationCommand.StudentId));
             var studentRebuilt = studentRebuild.CreateAggregate(listDomainEvents, studentID);
+            AggregateID = studentID.ID.ToString();
 
             var classroomRegistration = new ClassroomRegistrationStudent(StudentRegistrationID.Of(Guid.NewGuid()));
             var registrationDetail = StudentRegistrationDetail.Create(
@@ -114,6 +120,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             var listDomainEvents = await GetEventsByAggregateID(updateAccountDetailCommand.StudentId);
             var studentID = StudentID.Of(Guid.Parse(updateAccountDetailCommand.StudentId));
             var studentRebuilt = studentRebuild.CreateAggregate(listDomainEvents, studentID);
+            AggregateID = studentID.ID.ToString();
 
             var accountDetail = StudentAccountDetail.Create(
                 updateAccountDetailCommand.Username,
@@ -148,6 +155,8 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             var array = list.ToArray();
             for (var index = 0; index < array.Length; index++)
             {
+                //set aggregate id to events
+                array[index].SetAggregateId(AggregateID);
                 var stored = new StoredEvent();
                 stored.AggregateId = array[index].GetAggregateId();
                 stored.StoredName = array[index].GetAggregate();
