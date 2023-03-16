@@ -3,7 +3,7 @@ Initial project to learn and adopt the software delevopment approach DDD, orient
 
 ## Diagrams:
 
-Estrategic: VirtualEducation.DDD.Diagrams/DDD Oficina Edu Virtual-Estratégico.jpg
+Estrategic: https://github.com/ksbcoder/VitualEducation.DDD/blob/053a2f36a4f496f09a04bfa419fb76450dfc1bfc/VirtualEducation.DDD.Diagrams/DDD%20Oficina%20Edu%20Virtual-Estrat%C3%A9gico.jpg
 
 Tactic: https://github.com/ksbcoder/VitualEducation.DDD/blob/develop/VirtualEducation.DDD.Diagrams/DDD%20Oficina%20Edu%20Virtual-T%C3%A1ctico.jpg
 
