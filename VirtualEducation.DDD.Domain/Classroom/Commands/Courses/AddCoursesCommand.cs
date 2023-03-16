@@ -8,5 +8,15 @@
         public DateTime DateStart { get; init; }
         public DateTime DateEnd { get; init; }
         public int Duration { get; init; }
+
+        public AddCoursesCommand(string classroomId, string courseName, string courseDescription, DateTime dateStart, DateTime dateEnd, int duration)
+        {
+            ClassroomId = classroomId;
+            CourseName = courseName;
+            CourseDescription = courseDescription;
+            DateStart = dateStart;
+            DateEnd = dateEnd;
+            Duration = duration;
+        }
     }
 }

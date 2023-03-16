@@ -29,6 +29,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
         {
             _storedEventRepository = classroomRepository;
         }
+
         #region Aggregate methods
         private string AggregateID;
         public async Task<Classroom.Entities.Classroom> CreateClassroom(
@@ -51,6 +52,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             classroom = classroomRebuild.CreateAggregate(domainEvents, classroom.ClassroomID);
             return classroom;
         }
+
         public async Task<Classroom.Entities.Classroom> AddCoursesToClassroom(
             AddCoursesCommand addCoursesCommand)
         {
@@ -82,6 +84,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             classroomRebuilt = classroomRebuild.CreateAggregate(listDomainEvents, classroomID);
             return classroomRebuilt;
         }
+
         public async Task<Classroom.Entities.Classroom> AddAssessmentsToClassroom(
             AddAssessmentsCommand addAssessmentsCommand)
         {
@@ -110,6 +113,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             classroomRebuilt = classroomRebuild.CreateAggregate(listDomainEvents, classroomID);
             return classroomRebuilt;
         }
+
         public async Task<Classroom.Entities.Classroom> UpdateAssessment(
             UpdateAssessmentCommand updateAssessmentCommand)
         {
@@ -152,6 +156,7 @@ namespace VirtualEducation.DDD.Domain.UseCases.UseCases
             return classroomRebuilt;
 
         }
+
         public async Task<Classroom.Entities.Classroom> GetClassroomById(string classroomId)
         {
             var classroomRebuild = new ClassroomRebuild();

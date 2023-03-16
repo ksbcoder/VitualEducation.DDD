@@ -4,5 +4,11 @@
     {
         public string StudentId { get; init; }
         public string Username { get; init; }
+
+        public StudentUpdateAccountDetailCommand(string studentId, string username)
+        {
+            StudentId = studentId;
+            Username = username;
+        }
     }
 }
