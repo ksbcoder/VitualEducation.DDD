@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "VirtualEducation.DDD.Domain": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:1139;http://localhost:1140"
+    }
+  }
+}

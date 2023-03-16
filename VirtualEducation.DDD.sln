@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualEducation.DDD.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualEducation.DDD.Infrastructure", "VirtualEducation.DDD.Infrastructure\VirtualEducation.DDD.Infrastructure.csproj", "{22EA849C-641A-4E48-9510-C3EC23710837}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualEducation.DDD.Domain.UseCases", "VirtualEducation.DDD.Domain.UseCases\VirtualEducation.DDD.Domain.UseCases.csproj", "{78CC7BCA-B1D9-45B5-BED9-B754A756D49D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtualEducation.DDD.Domain.UseCases", "VirtualEducation.DDD.Domain.UseCases\VirtualEducation.DDD.Domain.UseCases.csproj", "{78CC7BCA-B1D9-45B5-BED9-B754A756D49D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{146AD4C0-3D98-4573-AA1F-D817DAE2C8C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualEducation.DDD.Tests", "VirtualEducation.DDD.Tests\VirtualEducation.DDD.Tests.csproj", "{8B9A1184-F4A6-46F2-848D-62246CD058D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,10 @@ Global
 		{78CC7BCA-B1D9-45B5-BED9-B754A756D49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78CC7BCA-B1D9-45B5-BED9-B754A756D49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78CC7BCA-B1D9-45B5-BED9-B754A756D49D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B9A1184-F4A6-46F2-848D-62246CD058D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B9A1184-F4A6-46F2-848D-62246CD058D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B9A1184-F4A6-46F2-848D-62246CD058D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B9A1184-F4A6-46F2-848D-62246CD058D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +56,7 @@ Global
 		{60099E7C-BFFE-46F3-B4A4-F379C8F87B32} = {EA44EFC1-585D-4CE9-AAD1-BE7545A19B4D}
 		{22EA849C-641A-4E48-9510-C3EC23710837} = {E6370B81-CAF2-423D-97C7-D03071E5AAED}
 		{78CC7BCA-B1D9-45B5-BED9-B754A756D49D} = {EA44EFC1-585D-4CE9-AAD1-BE7545A19B4D}
+		{8B9A1184-F4A6-46F2-848D-62246CD058D8} = {146AD4C0-3D98-4573-AA1F-D817DAE2C8C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1ACEC95A-9FA3-4701-B180-8FF4C55D9A12}
